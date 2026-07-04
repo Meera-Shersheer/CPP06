@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/03 01:23:42 by mshershe          #+#    #+#             */
-/*   Updated: 2026/07/04 14:43:16 by mshershe         ###   ########.fr       */
+/*   Updated: 2026/07/04 14:43:59 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void ScalarConverter::convert(const std::string& str)
         std::cout << "DOUBLE" << std::endl;
         break;
 
-    case PSEUDO:
+    case PESUDO:
         std::cout << "PSEUDO" << std::endl;
         break;
 
