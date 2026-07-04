@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/04 14:36:38 by mshershe          #+#    #+#             */
-/*   Updated: 2026/07/04 14:42:34 by mshershe         ###   ########.fr       */
+/*   Updated: 2026/07/05 01:46:46 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@ int main(int argc, char **argv)
 		std::cout << "no paramters where passed to convert" << std::endl;
 	else
 	{
-		int i = 0;
+		int i = 1;
 		while (i < argc)
 		{
 			ScalarConverter::convert(argv[i]);
 			std::cout << "------------------------------------------------" << std::endl;
+			i++;
 		}
 	}
 	return 0;

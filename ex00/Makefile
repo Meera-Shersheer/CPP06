@@ -8,8 +8,8 @@ CPP = c++
 
 CPPFLAGS = -Wall -Wextra -Werror  -std=c++98
 
-NAME = 
-SRC =  
+NAME = converter
+SRC =  main.cpp ScalarConverter.cpp
 
 OBJECTDIR = object_files
 OBJ = $(addprefix $(OBJECTDIR)/, $(SRC:.cpp=.o))

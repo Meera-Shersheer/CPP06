@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/03 01:23:49 by mshershe          #+#    #+#             */
-/*   Updated: 2026/07/04 13:42:01 by mshershe         ###   ########.fr       */
+/*   Updated: 2026/07/05 01:40:55 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ public:
 	static void convert(const std::string& str);
 };
 
-typedef enum Type
+typedef enum 
 {
 	CHAR, //0
 	INT, //1
@@ -37,4 +37,4 @@ typedef enum Type
 	DOUBLE, //3
 	PESUDO, //4 
 	INVALID //5
-};
+}Type;

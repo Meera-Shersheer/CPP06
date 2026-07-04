@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/03 01:23:42 by mshershe          #+#    #+#             */
-/*   Updated: 2026/07/04 14:43:59 by mshershe         ###   ########.fr       */
+/*   Updated: 2026/07/05 02:10:45 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void ScalarConverter::convert(const std::string& str)
 		else if (str.length() >= 1)
 			type = INT;
 			
-		for (int i = 1; i < str.length(); i++)
+		for (size_t i = 1; i < str.length(); i++)
 		{
 			if (!isdigit(str[i]))
 			{
@@ -103,7 +103,7 @@ void ScalarConverter::convert(const std::string& str)
 
 	
 
-	switch (type)
+switch (type)
 {
     case CHAR:
         std::cout << "CHAR" << std::endl;
@@ -137,9 +137,11 @@ void ScalarConverter::convert(const std::string& str)
 	
 }
 
-//detect 's'
 //scientific notations 1.5e-5
 //multiple fs and multiple dots 
 //.3
 //.f
 // 5.
+//5.f
+//1.2.3
+//check limits of int an ...
