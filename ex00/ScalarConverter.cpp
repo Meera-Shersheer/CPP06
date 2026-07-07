@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/03 01:23:42 by mshershe          #+#    #+#             */
-/*   Updated: 2026/07/07 14:32:09 by mshershe         ###   ########.fr       */
+/*   Updated: 2026/07/07 14:56:58 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,30 +53,21 @@ ScalarConverter::~ScalarConverter()
 
 void ScalarConverter::convert(const std::string& str)
 {
-
-	//check negatives
 	Type type = INVALID;
-	/////////dtect part, add the pesuedos 
+	
 	if (str.empty())
-	{
 		return ;
-	}
 	//detect the literal type
 	if (str == "-inff" || str == "+inff" || str == "inff"|| \
 		str == "nanf" || str == "-inf" || str == "+inf" || \
 		str == "nan" || str == "inf")
-	{
-			//pesudo s
 			type = PESUDO;
-		
-	}
-	else if (str.length() == 1)
+	/*else if (str.length() == 1)
 	{
 		if (!isdigit(str[0]))
 			type = CHAR;
 		else
 			type = INT;
-	
 	}
 	else if(str.find('.') == std::string::npos)
 	{
@@ -88,10 +79,7 @@ void ScalarConverter::convert(const std::string& str)
 		for (size_t i = 1; i < str.length(); i++)
 		{
 			if (!isdigit(str[i]))
-			{
 				type = INVALID;
-				//return an error
-			}
 		}
 	}
 	else
@@ -104,24 +92,29 @@ void ScalarConverter::convert(const std::string& str)
 				type = INVALID;
 			else if(str.find('f') == str.length()-1)
 			{
-				//it is a float
-				
 				if (str.find('f') - 1 == str.find('.') )
 					type = INVALID;
 				else
 					type = FLOAT;
-				
 			}
 			else
-			{
-
 				type = INVALID;
-			}
-		
 		}
 		else if (str.find('.') != str.length()-1)
 			type = DOUBLE;
-	}
+		// check the limits for char  after conversion 
+		if (type == CHAR)
+		{
+			// if (str < std::numeric_limits<char>::min() ||
+			// 	str > std::numeric_limits<char>::max())
+			// {
+			// }
+		}
+		
+
+		// check the limits for the numerical types after conv
+		
+	}*/
 
 	
 
@@ -164,6 +157,14 @@ switch (type)
 
 //scientific notations 1.5e-5
 //check limits of int an ...
+//1.a
+//1.2x
+//ab.12
+//3.-4
+// a digit
+// one . (decimal point)
+// one optional leading + or -
+// one trailing f (for float only)
 
 
 /*
@@ -179,4 +180,9 @@ std::numeric_limits<float>::max();
 std::numeric_limits<double>::lowest();
 std::numeric_limits<double>::max();
 
+*/
+
+/*
+scan the string once 
+and record the number of dots, fs, sign and digits
 */
