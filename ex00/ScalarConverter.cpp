@@ -6,11 +6,26 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/03 01:23:42 by mshershe          #+#    #+#             */
-/*   Updated: 2026/07/05 02:10:45 by mshershe         ###   ########.fr       */
+/*   Updated: 2026/07/07 14:32:09 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
+
+
+int count(std::string str, char c )
+{
+	size_t i = 0;
+	int ocurrance = 0;
+	
+	while (i < str.length())
+	{
+		if (str[i] == c) 
+			ocurrance++;
+		i++;	
+	}
+	return (ocurrance);
+}
 
 ScalarConverter::ScalarConverter()
 {
@@ -81,14 +96,21 @@ void ScalarConverter::convert(const std::string& str)
 	}
 	else
 	{
-		if(str.find('f') != std::string::npos)
+		if (count(str, '.') > 1 || count(str, 'f') > 1)
+			type = INVALID;
+		else if(str.find('f') != std::string::npos)
 		{		
 			if (str[0] != '-' && str[0] != '+' && !isdigit(str[0]))
 				type = INVALID;
 			else if(str.find('f') == str.length()-1)
 			{
 				//it is a float
-				type = FLOAT;
+				
+				if (str.find('f') - 1 == str.find('.') )
+					type = INVALID;
+				else
+					type = FLOAT;
+				
 			}
 			else
 			{
@@ -97,7 +119,7 @@ void ScalarConverter::convert(const std::string& str)
 			}
 		
 		}
-		else
+		else if (str.find('.') != str.length()-1)
 			type = DOUBLE;
 	}
 
@@ -137,11 +159,24 @@ switch (type)
 	
 }
 
+
+
+
 //scientific notations 1.5e-5
-//multiple fs and multiple dots 
-//.3
-//.f
-// 5.
-//5.f
-//1.2.3
 //check limits of int an ...
+
+
+/*
+std::cout << std::numeric_limits<int>::min() << std::endl;
+std::cout << std::numeric_limits<int>::max() << std::endl;
+
+std::numeric_limits<char>::min();
+std::numeric_limits<char>::max();
+
+std::numeric_limits<float>::lowest();
+std::numeric_limits<float>::max();
+
+std::numeric_limits<double>::lowest();
+std::numeric_limits<double>::max();
+
+*/

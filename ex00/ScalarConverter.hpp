@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/03 01:23:49 by mshershe          #+#    #+#             */
-/*   Updated: 2026/07/05 01:40:55 by mshershe         ###   ########.fr       */
+/*   Updated: 2026/07/07 14:30:21 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
-
+#include <limits>
 
 class ScalarConverter
 {
