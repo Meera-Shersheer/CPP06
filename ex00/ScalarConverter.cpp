@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/03 01:23:42 by mshershe          #+#    #+#             */
-/*   Updated: 2026/07/07 14:56:58 by mshershe         ###   ########.fr       */
+/*   Updated: 2026/07/07 15:05:18 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,20 @@ void ScalarConverter::convert(const std::string& str)
 		
 	}*/
 
+	/*
+	after detecting the type we convert the string into the actual type 
+	then the static cast is used to convert the other types.
+	char
+	int
+	float
+	double
+
+	int value = std::atoi(str.c_str());
+	long value = std::strtol(str.c_str(), NULL, 10);
+	double value = std::strtod(str.c_str(), NULL);
+	float value = static_cast<float>(std::strtod(str.c_str(), NULL));
 	
+	*/
 
 switch (type)
 {
