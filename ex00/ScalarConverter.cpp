@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/03 01:23:42 by mshershe          #+#    #+#             */
-/*   Updated: 2026/07/07 15:05:18 by mshershe         ###   ########.fr       */
+/*   Updated: 2026/07/08 14:48:12 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ ScalarConverter::~ScalarConverter()
 void ScalarConverter::convert(const std::string& str)
 {
 	Type type = INVALID;
+	size_t len = str.length();
+	int sign = 0;
+	int sign_out_pf_place = 0;
+	size_t num_digits = 0;
+	size_t num_dots = 0;
+	size_t num_fs = 0;
 	
 	if (str.empty())
 		return ;
@@ -62,6 +68,50 @@ void ScalarConverter::convert(const std::string& str)
 		str == "nanf" || str == "-inf" || str == "+inf" || \
 		str == "nan" || str == "inf")
 			type = PESUDO;
+	else
+	{
+		size_t i = 0;
+		if (str[0] == '+')
+			sign = 1;
+		else if (str[0] == '-')
+			sign = -1;
+		while(i < len)
+		{
+			if (isdigit(str[i]))
+				num_digits++;
+			else if (str[i] == 'f')
+				num_fs++;
+			else if (str[i] == '.')
+				num_dots++;
+			else if ((str[i] == '+' || str[i] == '-') && i != 0)
+					sign_out_pf_place = 1;
+			i++;
+		}
+		if (num_dots > 1 || num_fs > 1 || sign_out_pf_place)
+			type = INVALID;
+		else if (len == 1 && num_digits == 0)
+			type = CHAR;
+		else if (len == num_digits || (len - 1 == num_digits && sign != 0))
+			type = INT;
+		else if ((num_digits == len - 2 || (len - 3 == num_digits && sign != 0)) && num_fs == 1)
+		{
+			if(str.find('f') == str.length()-1)
+			{
+				if ((num_dots == 1 && str.find('f') - 1 != str.find('.')) || num_dots == 0)
+					type = FLOAT;
+			}
+			else
+				type = INVALID;
+		}
+		else if ((num_digits == len -1 || (len - 2 == num_digits && sign != 0)) && num_dots == 1)
+		{
+			if (str.find('.') != str.length()-1)
+				type = DOUBLE;
+			else
+				type = INVALID;
+		}
+
+	}
 	/*else if (str.length() == 1)
 	{
 		if (!isdigit(str[0]))
