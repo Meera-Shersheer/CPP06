@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/03 01:23:49 by mshershe          #+#    #+#             */
-/*   Updated: 2026/07/07 14:30:21 by mshershe         ###   ########.fr       */
+/*   Updated: 2026/07/12 15:42:44 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,3 +38,14 @@ typedef enum
 	PESUDO, //4 
 	INVALID //5
 }Type;
+
+typedef struct  s_conv
+{
+	char value_c;
+	int value_int;
+	float value_f;
+	double value_d;
+	
+} t_conv;
+
+static Type detect_type(const std::string& str);

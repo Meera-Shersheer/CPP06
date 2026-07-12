@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/03 01:23:42 by mshershe          #+#    #+#             */
-/*   Updated: 2026/07/08 14:48:12 by mshershe         ###   ########.fr       */
+/*   Updated: 2026/07/12 15:46:11 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ ScalarConverter::~ScalarConverter()
 {
 }
 
-
-void ScalarConverter::convert(const std::string& str)
+static Type detect_type(const std::string& str)
 {
 	Type type = INVALID;
 	size_t len = str.length();
@@ -110,57 +109,96 @@ void ScalarConverter::convert(const std::string& str)
 			else
 				type = INVALID;
 		}
+	}
+	return (type);
+}
 
-	}
-	/*else if (str.length() == 1)
+
+
+
+static void print(t_conv *convertor)
+{
+
+}
+
+void ScalarConverter::convert(const std::string& str)
+{
+	Type type = detect_type(str);
+	int out_of_scope = 0;
+	t_conv convertor;
+	
+	//convert based on the actual type 
+	if (type == CHAR)
 	{
-		if (!isdigit(str[0]))
-			type = CHAR;
+		if (str[0] >= std::numeric_limits<char>::min() ||
+			str[0] <= std::numeric_limits<char>::max())
+		{
+			convertor.value_c = str[0];
+			convertor.value_int = static_cast<int>(convertor.value_c);
+			convertor.value_f = static_cast<float>(convertor.value_c);
+			convertor.value_d = static_cast<double>(convertor.value_c);
+			//convert to other forms 
+			//print
+		}
 		else
-			type = INT;
-	}
-	else if(str.find('.') == std::string::npos)
-	{
-		if (str[0] != '-' && str[0] != '+' && !isdigit(str[0]))
-			type = INVALID;
-		else if (str.length() >= 1)
-			type = INT;
+			out_of_scope = 1;
 			
-		for (size_t i = 1; i < str.length(); i++)
-		{
-			if (!isdigit(str[i]))
-				type = INVALID;
-		}
 	}
-	else
+	else if (type == INT)
 	{
-		if (count(str, '.') > 1 || count(str, 'f') > 1)
-			type = INVALID;
-		else if(str.find('f') != std::string::npos)
-		{		
-			if (str[0] != '-' && str[0] != '+' && !isdigit(str[0]))
-				type = INVALID;
-			else if(str.find('f') == str.length()-1)
-			{
-				if (str.find('f') - 1 == str.find('.') )
-					type = INVALID;
-				else
-					type = FLOAT;
-			}
-			else
-				type = INVALID;
-		}
-		else if (str.find('.') != str.length()-1)
-			type = DOUBLE;
-		// check the limits for char  after conversion 
-		if (type == CHAR)
+
+		long res = std::strtol(str.c_str(), NULL, 10);
+		if (res >= std::numeric_limits<int>::min() ||
+			res <= std::numeric_limits<int>::max())
 		{
-			// if (str < std::numeric_limits<char>::min() ||
-			// 	str > std::numeric_limits<char>::max())
-			// {
-			// }
+			convertor.value_int = res;
+			convertor.value_c = static_cast<char>(convertor.value_int);
+			convertor.value_f = static_cast<float>(convertor.value_int);
+			convertor.value_d = static_cast<double>(convertor.value_int);
+			//convert to other forms 
+			//print 
 		}
+		else
+			out_of_scope = 1;
+	}
+	else if (type == DOUBLE)
+	{
+		double res = std::strtod(str.c_str(), NULL);
+		if (res >= std::numeric_limits<double>::lowest() ||
+			res <= std::numeric_limits<double>::max())
+		{
+			convertor.value_d = res;
+			convertor.value_c = static_cast<char>(convertor.value_d);
+			convertor.value_int = static_cast<int>(convertor.value_d);
+			convertor.value_f = static_cast<float>(convertor.value_d);
+			//convert to other forms 
+			//print
+		}
+		else
+			out_of_scope = 1;
+	}
+	else if (type == FLOAT)
+	{
+		float res = static_cast<float>(std::strtod(str.c_str(), NULL));
+		if (res >= std::numeric_limits<float>::lowest() ||
+			res <= std::numeric_limits<float>::max())
+		{
+			convertor.value_f = res;
+			convertor.value_c = static_cast<char>(convertor.value_f);
+			convertor.value_int = static_cast<int>(convertor.value_f);
+			convertor.value_d = static_cast<double>(convertor.value_f);
+			//convert to other forms 
+			//print
+		}
+		else
+			out_of_scope = 1;
+	}
+	else if (type == PESUDO)
+	{
 		
+	}
+
+	/*
 
 		// check the limits for the numerical types after conv
 		
@@ -220,14 +258,7 @@ switch (type)
 
 //scientific notations 1.5e-5
 //check limits of int an ...
-//1.a
-//1.2x
-//ab.12
-//3.-4
-// a digit
-// one . (decimal point)
-// one optional leading + or -
-// one trailing f (for float only)
+
 
 
 /*
@@ -243,9 +274,4 @@ std::numeric_limits<float>::max();
 std::numeric_limits<double>::lowest();
 std::numeric_limits<double>::max();
 
-*/
-
-/*
-scan the string once 
-and record the number of dots, fs, sign and digits
 */
